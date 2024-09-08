@@ -1,0 +1,81 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class LoginApp {
+
+    static HashMap<String, String> users = new HashMap<>();
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int choice = 0;
+
+        while (choice != 3) {
+            System.out.println("Select an option: ");
+            System.out.println("1. Register");
+            System.out.println("2. Login");
+            System.out.println("3. Quit");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // clear the invalid input
+            }
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume the newline
+
+            switch (choice) {
+                case 1:
+                    registerUser(scanner);
+                    break;
+                case 2:
+                    loginUser(scanner);
+                    break;
+                case 3:
+                    System.out.println("Exiting the application.");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please select 1, 2, or 3.");
+            }
+        }
+        scanner.close();
+    }
+
+    static void registerUser(Scanner scanner) {
+        System.out.println("Enter your username:");
+        String username = scanner.nextLine().trim();
+        System.out.println("Enter your password:");
+        String password = scanner.nextLine().trim();
+
+        if (username.isEmpty() || password.isEmpty()) {
+            System.out.println("Username and password cannot be empty.");
+            return;
+        }
+
+        if (users.containsKey(username)) {
+            System.out.println("User already exists.");
+        } else {
+            users.put(username, password);
+            System.out.println("Registration successful.");
+        }
+    }
+
+    static void loginUser(Scanner scanner) {
+        System.out.println("Enter your username:");
+        String username = scanner.nextLine().trim();
+        System.out.println("Enter your password:");
+        String password = scanner.nextLine().trim();
+
+        if (username.isEmpty() || password.isEmpty()) {
+            System.out.println("Username and password cannot be empty.");
+            return;
+        }
+
+        if (users.containsKey(username)) {
+            if (users.get(username).equals(password)) {
+                System.out.println("Login successful.");
+            } else {
+                System.out.println("Invalid username or password.");
+            }
+        } else {
+            System.out.println("Invalid username or password.");
+        }
+    }
+}
